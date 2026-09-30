@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>امتحان النمذجة الشامل - تكنولوجيا المعلومات</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #090608;
+            color: #f8fafc;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .bg-grid-pattern {
+            background-image: radial-gradient(circle at 50% 0%, rgba(244, 63, 94, 0.15) 0%, transparent 60%), radial-gradient(circle at 100% 100%, rgba(225, 29, 72, 0.1) 0%, transparent 50%), linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 35px 35px, 35px 35px;
+        }
+        
+        .ultra-glass {
+            background: rgba(20, 12, 16, 0.85);
+            backdrop-filter: blur(25px) saturate(200%);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            border: 1px solid rgba(244, 63, 94, 0.2);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        @keyframes float-slow {
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-5px) rotate(0.3deg);
+            }
+        }
+        
+        .animate-float {
+            animation: float-slow 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-bar {
+            0%,
+            100% {
+                height: 35%;
+            }
+            50% {
+                height: 90%;
+            }
+        }
+        
+        .chart-bar-1 {
+            animation: pulse-bar 2.2s ease-in-out infinite;
+        }
+        
+        .chart-bar-2 {
+            animation: pulse-bar 1.8s ease-in-out infinite 0.3s;
+        }
+        
+        .chart-bar-3 {
+            animation: pulse-bar 2.5s ease-in-out infinite 0.6s;
+        }
+        
+        .chart-bar-4 {
+            animation: pulse-bar 2.0s ease-in-out infinite 0.9s;
+        }
+        
+        @keyframes shake-3d {
+            0%,
+            100% {
+                transform: translateX(0) scale(1);
+            }
+            20% {
+                transform: translateX(-10px) scale(1.01);
+            }
+            40% {
+                transform: translateX(10px) scale(1.01);
+            }
+            60% {
+                transform: translateX(-6px) scale(1.01);
+            }
+            80% {
+                transform: translateX(6px) scale(1.01);
+            }
+        }
+        
+        .unanswered-card,
+        .input-error-shake {
+            border: 2px solid #f43f5e !important;
+            box-shadow: 0 0 35px rgba(244, 63, 94, 0.5) !important;
+            animation: shake-3d 0.5s ease-in-out;
+            background: rgba(244, 63, 94, 0.1) !important;
+        }
+        
+        .option-card-input:checked+.option-card-content {
+            border-color: #f43f5e;
+            background: rgba(244, 63, 94, 0.12);
+            box-shadow: 0 0 20px rgba(244, 63, 94, 0.25);
+        }
+        
+        .option-card-input:checked+.option-card-content .radio-dot {
+            border-color: #f43f5e;
+            background-color: #f43f5e;
+            box-shadow: 0 0 10px #f43f5e;
+        }
+        
+        .option-card-input:checked+.option-card-content .radio-dot div {
+            opacity: 1;
+        }
+        
+        .correction-option-card-input:checked+.correction-option-card-content {
+            border-color: #fb7185;
+            background: rgba(251, 113, 133, 0.12);
+            box-shadow: 0 0 20px rgba(251, 113, 133, 0.25);
+        }
+        
+        .correction-option-card-input:checked+.correction-option-card-content .radio-dot {
+            border-color: #fb7185;
+            background-color: #fb7185;
+            box-shadow: 0 0 10px #fb7185;
+        }
+        
+        .correction-option-card-input:checked+.correction-option-card-content .radio-dot div {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body class="bg-grid-pattern flex flex-col min-h-screen">
+
+    <!-- Anti-Cheat Warning Modal -->
+    <div id="cheat-modal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-xl hidden flex items-center justify-center p-4">
+        <div class="ultra-glass border-rose-500/50 bg-slate-900/95 max-w-md w-full p-6 sm:p-8 rounded-3xl text-center space-y-5 shadow-2xl shadow-rose-500/20">
+            <div class="inline-block p-4 bg-rose-500/20 border border-rose-500/30 rounded-full text-rose-400 animate-bounce">
+                <svg class="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+            </div>
+            <div class="space-y-2">
+                <h3 class="text-xl sm:text-2xl font-black text-rose-400">⚠️ تم ضبط محاولة غش!</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">تم رصد مغادرتك لصفحة الامتحان أو تبديل التبويب. وفقاً لتعليمات الأمان الصارمة، تم احتساب النتيجة <span class="text-rose-400 font-bold">صفر (0)</span> وإنهاء المحاولة.</p>
+            </div>
+            <button onclick="handleCheatZeroScore()" class="w-full py-3.5 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-400 text-white font-black rounded-2xl text-sm transition-all shadow-lg shadow-rose-500/30">
+                حسناً
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Full-Screen Container -->
+    <main class="flex-grow flex items-center justify-center w-full p-3 sm:p-6 my-auto z-10">
+        <div class="w-full max-w-4xl ultra-glass rounded-3xl overflow-hidden transition-all duration-500">
+
+            <!-- Welcome View -->
+            <div id="welcome-view" class="p-6 sm:p-10 space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-black/40 p-6 rounded-3xl border border-rose-500/20 shadow-inner">
+                    <div class="lg:col-span-7 space-y-3 text-right">
+                        <div class="inline-block text-[11px] bg-rose-500/10 text-rose-300 px-3 py-1 rounded-lg border border-rose-500/20 font-bold">
+                            تكنولوجيا المعلومات المستوى الثاني | الصف العاشر
+                        </div>
+                        <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-white">امتحان النمذجة الشامل</h2>
+                        <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">اختبار تفاعلي شامل لقياس مهارات البيانات، إكسل، ومراجعة فعالية لوحة المعلومات بدقة (25 سؤالاً - 200 علامة).</p>
+                    </div>
+
+                    <div class="lg:col-span-5 relative p-4 rounded-2xl bg-gradient-to-b from-rose-950/40 to-black/60 border border-rose-500/30 shadow-xl overflow-hidden animate-float">
+                        <div class="absolute -right-8 -top-8 w-24 h-24 bg-rose-500/15 rounded-full blur-xl"></div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[10px] font-black text-rose-300">مخطط أعمدة التحليل (Chart)</span>
+                            <span class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
+                        </div>
+                        <div class="h-20 flex items-end justify-center gap-3 px-2 pt-3 border-b border-rose-500/20">
+                            <div class="w-7 bg-gradient-to-t from-rose-700 to-rose-400 rounded-t-lg chart-bar-1"></div>
+                            <div class="w-7 bg-gradient-to-t from-red-700 to-rose-500 rounded-t-lg chart-bar-2"></div>
+                            <div class="w-7 bg-gradient-to-t from-rose-800 to-pink-500 rounded-t-lg chart-bar-3"></div>
+                            <div class="w-7 bg-gradient-to-t from-pink-700 to-rose-400 rounded-t-lg chart-bar-4"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3 text-xs text-slate-300 bg-black/40 px-6 py-3.5 rounded-2xl border border-rose-500/20 shadow-inner">
+                    <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span> إعداد المهندس: <span class="font-bold text-white">إبراهيم المدادحة</span></div>
+                    <div class="hidden sm:block text-rose-900">|</div>
+                    <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-pink-400"></span> بإشراف المعلمة: <span class="font-bold text-rose-300">نسرين قنديل</span></div>
+                </div>
+
+                <div class="bg-rose-500/10 border border-rose-500/30 rounded-2xl p-4 sm:p-5 max-w-xl mx-auto text-rose-300 text-xs sm:text-sm flex items-start gap-3 text-right">
+                    <svg class="w-6 h-6 shrink-0 mt-0.5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    <div class="leading-relaxed">
+                        <span class="font-bold block text-rose-400 mb-0.5">تنبيه هام جداً بشأن الغش:</span> نظام مراقبة صارم مفعل أثناء الاختبار. مغادرة الصفحة أو تبديل التبويب ستؤدي فوراً إلى <span class="font-bold underline">احتساب النتيجة (صفر) وإنهاء المحاولة</span>!
+                    </div>
+                </div>
+
+                <div class="max-w-sm mx-auto space-y-2 text-right pt-2">
+                    <label class="block text-xs font-bold text-slate-300">الاسم الثلاثي للطالبة:</label>
+                    <input type="text" id="student-name" placeholder="اكتبي اسمك هنا..." oninput="clearInputError()" class="w-full px-5 py-4 bg-black/60 border border-rose-500/30 rounded-2xl text-white text-center text-sm font-bold focus:outline-none focus:border-rose-400 transition-all">
+                </div>
+
+                <div class="pt-2 text-center">
+                    <button onclick="startExam()" class="w-full max-w-sm py-4 bg-gradient-to-r from-rose-500 via-red-600 to-rose-700 hover:from-rose-400 text-white font-black rounded-2xl shadow-xl shadow-rose-500/25 transition-all text-sm sm:text-base">
+                        بدء الاختبار الآن 🚀
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Form View -->
+            <div id="quiz-view" class="hidden p-4 sm:p-8 space-y-6">
+                <div class="bg-black/40 border border-rose-500/20 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center gap-2">
+                    <h1 class="text-xs sm:text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-400">تكنولوجيا المعلومات المستوى الثاني | الصف العاشر</h1>
+                    <div id="header-badge" class="text-xs bg-rose-500/10 text-rose-300 px-4 py-1.5 rounded-full border border-rose-500/20 font-bold">
+                        الطالبة: ---
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-between items-center border-b border-rose-500/20 pb-4 gap-3">
+                    <div class="flex flex-col">
+                        <span class="text-xs font-bold text-rose-300 bg-rose-500/10 px-4 py-1.5 rounded-full border border-rose-500/20 inline-block">امتحان النمذجة الشامل</span>
+                        <span class="text-xs text-slate-400 mt-2 px-1">عدد الأسئلة: <span class="text-white font-bold">25 سؤالاً</span> | العلامة الكلية: <span class="text-white font-bold">200 علامة</span></span>
+                    </div>
+                    <span id="warning-missing-tag" class="text-xs text-rose-400 bg-rose-500/10 px-3.5 py-1.5 rounded-full border border-rose-500/20 font-bold hidden">
+                        ⚠️ يرجى الإجابة على كافة الأسئلة
+                    </span>
+                </div>
+
+                <div id="questions-form-container" class="space-y-6"></div>
+
+                <div class="pt-6 border-t border-rose-500/20 text-center">
+                    <button onclick="submitExamForm()" class="w-full sm:w-auto px-12 py-4 bg-gradient-to-r from-rose-500 via-red-600 to-rose-700 hover:from-rose-400 text-white font-black rounded-2xl text-sm sm:text-base shadow-xl shadow-rose-500/20">
+                        تسليم الإجابات وعرض النتيجة الأولى ✨
+                    </button>
+                </div>
+            </div>
+
+            <!-- First Result View -->
+            <div id="first-result-view" class="hidden p-6 sm:p-12 text-center space-y-8">
+                <div id="first-result-icon-container" class="inline-block p-6 rounded-full mb-1">
+                    <svg class="w-14 h-14 mx-auto animate-float" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                    </svg>
+                </div>
+
+                <div class="space-y-2">
+                    <h3 id="first-result-heading" class="text-2xl sm:text-4xl font-black text-white tracking-tight"></h3>
+                    <p id="first-result-subheading" class="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto font-medium"></p>
+                </div>
+
+                <div class="bg-black/60 border border-rose-500/30 p-6 sm:p-8 rounded-3xl max-w-lg mx-auto space-y-6 shadow-2xl relative overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-rose-500/20 pb-3 relative z-10">
+                        <span class="text-xs text-slate-300 font-semibold">اسم الطالبة:</span>
+                        <span id="first-res-student-name" class="font-bold text-sm text-rose-300 bg-rose-500/10 px-3.5 py-1 rounded-xl border border-rose-500/20"></span>
+                    </div>
+
+                    <div class="relative z-10 py-2 flex flex-col items-center justify-center">
+                        <div class="relative flex items-center justify-center w-36 h-36 rounded-full bg-rose-950/40 border-4 border-rose-500/30">
+                            <div class="text-center">
+                                <span id="first-res-final-percentage" class="block text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-400">0%</span>
+                                <span class="text-[10px] text-slate-300 font-bold uppercase">النتيجة الأولى</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-center space-y-1">
+                            <div class="text-2xl sm:text-3xl font-black text-white">
+                                <span id="first-res-total-score-num" class="text-rose-400">0</span>
+                                <span class="text-slate-500 text-lg">/</span>
+                                <span class="text-slate-400 text-lg">200</span>
+                            </div>
+                            <span class="text-xs text-slate-300 font-semibold">مجموع العلامات</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5 relative z-10">
+                        <div class="w-full bg-black/60 h-3 rounded-full overflow-hidden p-0.5 border border-rose-500/20">
+                            <div id="first-res-progress-bar" class="bg-gradient-to-r from-rose-500 via-red-500 to-pink-500 h-full rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-rose-500/20 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button onclick="proceedToCorrection()" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-rose-600 via-red-600 to-pink-700 hover:opacity-90 text-white font-black rounded-2xl text-sm shadow-xl shadow-rose-500/20">
+                        🔄 الانتقال لجولة التصحيح
+                    </button>
+                    <button onclick="exitExamDirectly()" class="w-full sm:w-auto px-8 py-4 bg-black/60 hover:bg-black text-white font-bold rounded-2xl text-sm transition-all border border-rose-500/30 shadow-lg">
+                        🚪 خروج والاحتفاظ بالنتيجة الحالية
+                    </button>
+                </div>
+            </div>
+
+            <!-- Correction View -->
+            <div id="correction-view" class="hidden p-4 sm:p-8 space-y-6 text-right">
+                <div class="bg-black/40 border border-rose-500/20 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center gap-2">
+                    <h2 class="text-base sm:text-lg font-black text-rose-300">🔄 جولة تصحيح الأسئلة الخاطئة</h2>
+                    <p class="text-xs text-slate-300">أيتها الطالبة المتألقة، قومي بمراجعة هذه الأسئلة وإعادة اختيار الإجابة الأدق لرفع نتيجتك!</p>
+                </div>
+
+                <div class="flex justify-between items-center border-b border-rose-500/20 pb-3">
+                    <span class="text-xs text-rose-300 font-bold">الأسئلة الخاطئة المراد تصحيحها</span>
+                    <span id="correction-warning-tag" class="text-xs text-rose-400 bg-rose-500/10 px-3.5 py-1 rounded-full border border-rose-500/20 font-bold hidden">
+                        ⚠️ يرجى الإجابة على كافة الأسئلة أدناه
+                    </span>
+                </div>
+
+                <div id="correction-questions-container" class="space-y-6"></div>
+
+                <div class="pt-6 border-t border-rose-500/20 text-center">
+                    <button onclick="submitCorrectionForm()" class="w-full sm:w-auto px-12 py-4 bg-gradient-to-r from-rose-600 via-red-600 to-pink-700 hover:opacity-90 text-white font-black rounded-2xl text-sm sm:text-base shadow-xl shadow-rose-500/20">
+                        اعتماد التصحيح وعرض النتيجة النهائية ✨
+                    </button>
+                </div>
+            </div>
+
+            <!-- Final Result View -->
+            <div id="final-result-view" class="hidden p-6 sm:p-12 text-center space-y-8">
+                <div id="final-result-icon-container" class="inline-block p-6 rounded-full mb-1">
+                    <svg class="w-14 h-14 mx-auto animate-float" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                    </svg>
+                </div>
+
+                <div class="space-y-2">
+                    <h3 id="final-result-heading" class="text-2xl sm:text-4xl font-black text-white tracking-tight"></h3>
+                    <p id="final-result-subheading" class="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto font-medium"></p>
+                </div>
+
+                <div class="bg-black/60 border border-rose-500/30 p-6 sm:p-8 rounded-3xl max-w-xl mx-auto space-y-6 shadow-2xl relative overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-rose-500/20 pb-3 relative z-10">
+                        <span class="text-xs text-slate-300 font-semibold">اسم الطالبة:</span>
+                        <span id="final-res-student-name" class="font-bold text-sm text-rose-300 bg-rose-500/10 px-3.5 py-1 rounded-xl border border-rose-500/20"></span>
+                    </div>
+
+                    <div id="final-scores-grid" class="grid grid-cols-1 gap-4 relative z-10"></div>
+
+                    <div class="space-y-1.5 relative z-10">
+                        <div class="w-full bg-black/60 h-3 rounded-full overflow-hidden p-0.5 border border-rose-500/20">
+                            <div id="final-res-progress-bar" class="bg-gradient-to-r from-rose-500 via-red-500 to-pink-500 h-full rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center pt-4 border-t border-rose-500/20">
+                    <button onclick="location.reload()" class="px-8 py-3.5 bg-black/60 hover:bg-black text-white font-bold rounded-2xl text-sm transition-all border border-rose-500/30 shadow-lg">
+                        إعادة الاختبار من جديد 🔄
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="ultra-glass border-t border-rose-500/20 py-4 text-center text-xs text-slate-300 w-full z-10">
+        امتحان النمذجة الشامل | إعداد المهندس: إبراهيم المدادحة | بإشراف المعلمة: نسرين قنديل
+    </footer>
+
+    <script>
+        const examQuestions = [
+            // --- أولاً: أسئلة الهدف (أ) - تنظيم ومعالجة البيانات الخام (7 أسئلة) ---
+            {
+                id: 1,
+                goal: "الهدف (أ) - تنظيم ومعالجة البيانات الخام",
+                question: "عند استيراد بيانات نصية تحتوي على مسافات زائدة مخفية في بداية الكلمات ونهايتها، ما هو الإجراء التقني الأمثل لضمان نجاح دوال البحث اللاحقة دون ظهور أخطاء مطابقة؟",
+                options: [{
+                    text: "أ) تطبيق التنسيق الشرطي لتلوين الخلايا الفارغة تلقائياً.",
+                    isCorrect: false
+                }, {
+                    text: "ب) استخدام دالة التنظيف =TRIM() على أعمدة البيانات قبل ربطها بالمعادلات.",
+                    isCorrect: true
+                }, {
+                    text: "ج) تجميد صف العناوين لمنع ترحيل الحروف بالخطأ.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 2,
+                goal: "الهدف (أ) - تنظيم ومعالجة البيانات الخام",
+                question: "لماذا يفضل دائماً إدخال التواريخ بصيغة النظام المعتمدة بدلاً من كتابتها كنصوص عادية عند إنشاء الجداول التحليلية؟",
+                options: [{
+                    text: "أ) لأن النصوص لا تقبل التلوين التلقائي من خلال أشرطة البيانات.",
+                    isCorrect: false
+                }, {
+                    text: "ب) لتجنب فشل دوال الفرز، الترتيب، والتحليل الزمني التلقائي في المستقبل.",
+                    isCorrect: true
+                }, {
+                    text: "ج) لتقليل حجم ملف الإكسل وزيادة سرعة الحفظ فقط.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 3,
+                goal: "الهدف (أ) - تنظيم ومعالجة البيانات الخام",
+                question: "ما هو التأثير المباشر لترك خلايا فارغة وسط نطاق رقمي يتم تمثيله برسم بياني خطي (Line Chart)؟",
+                options: [{
+                    text: "أ) توقف البرنامج عن العمل نهائياً عند محاولة التحديث.",
+                    isCorrect: false
+                }, {
+                    text: "ب) ظهور فجوات أو انكسارات غير دقيقة في خط المخطط البياني.",
+                    isCorrect: true
+                }, {
+                    text: "ج) تحويل الرسم البياني تلقائياً إلى أعمدة متراكمة.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 4,
+                goal: "الهدف (أ) - تنظيم ومعالجة البيانات الخام",
+                question: "عندما تلاحظ أن الأرقام الكبيرة (مثل الملايين) تسبب ازدحاماً بصرياً وتصعب عملية استيعاب القيم في لوحة البيانات، ما هو الحل الأمثل لتجاوز هذه المشكلة؟",
+                options: [{
+                    text: "أ) إخفاء البيانات نهائياً وعدم عرضها في المخطط.",
+                    isCorrect: false
+                }, {
+                    text: "ب) عرض الأرقام بوحدات مختصرة (مثل الملايين أو الآلاف) وتوضيح ذلك في عنوان المخطط.",
+                    isCorrect: true
+                }, {
+                    text: "ج) تلوين الخلايا باللون الأحمر لإجبار المستخدم على التركيز.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 5,
+                goal: "الهدف (أ) - تنظيم ومعالجة البيانات الخام",
+                question: "ما هو السبب التقني الأساسي لظهور خطأ #REF! في خلايا الجدول بعد حذف صف أو عمود معين؟",
+                options: [{
+                    text: "أ) لأن الخلية المحذوفة كانت تحتوي على نص بدلاً من رقم.",
+                    isCorrect: false
+                }, {
+                    text: "ب) وجود مرجع خلية غير صالح في المعادلة نتيجة حذف العنصر الذي اعتمدت عليه.",
+                    isCorrect: true
+                }, {
+                    text: "ج) عدم تفعيل خاصية التنسيق كجدول (Ctrl + T).",
+                    isCorrect: false
+                }]
+            }, {
+                id: 6,
+                goal: "الهدف (أ) - تنظيم ومعالجة البيانات الخام",
+                question: "كيف تؤثر الأخطاء الإملائية البسيطة في تسميات الأعمدة على تقارير الجداول المحورية (Pivot Tables) اللاحقة؟",
+                options: [{
+                    text: "أ) تتسبب في دمج البيانات المتشابهة تلقائياً في خانة واحدة.",
+                    isCorrect: false
+                }, {
+                    text: "ب) تؤدي إلى فصل البيانات وتصنيفها بشكل خاطئ ومستقل داخل تقرير المحور.",
+                    isCorrect: true
+                }, {
+                    text: "ج) لا توجد أي تأثيرات طالما أن الأرقام سليمة.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 7,
+                goal: "الهدف (أ) - تنظيم ومعالجة البيانات الخام",
+                question: "ما هي الفائدة الاستراتيجية من استخدام اختصار Ctrl + T لتحويل النطاق إلى جدول رسمي بدلاً من ترك البيانات كنطاق عادي؟",
+                options: [{
+                    text: "أ) لتوسيع نطاق البيانات تلقائياً وتطبيق التنسيقات وتحديث المعادلات والجداول المحورية بسهولة.",
+                    isCorrect: true
+                }, {
+                    text: "ب) لمنع أي مستخدم آخر من تعديل الملف نهائياً.",
+                    isCorrect: false
+                }, {
+                    text: "ج) لإجبار الإكسل على طباعة الجدول في صفحة واحدة دائماً.",
+                    isCorrect: false
+                }]
+            },
+
+            // --- ثانياً: أسئلة الهدف (ب) - إنشاء لوحات المعلومات والتقارير الذكية (10 أسئلة) ---
+            {
+                id: 8,
+                goal: "الهدف (ب) - إنشاء لوحات المعلومات والتقارير الذكية",
+                question: "عند تصميم لوحة معلومات تنفيذية للإدارة العليا، ما هي القاعدة الذهبية لتوزيع العناصر البصرية وترتيبها؟",
+                options: [{
+                    text: "أ) توزيع العناصر عشوائياً لكسر الملل البصري وجذب الانتباه.",
+                    isCorrect: false
+                }, {
+                    text: "ب) تصميم اللوحة من الأعلى للأسفل ومن اليسار لليمين حسب نمط القراءة المعتاد للأهم.",
+                    isCorrect: true
+                }, {
+                    text: "ج) وضع التفاصيل الدقيقة في أعلى اللوحة والملخصات في الأسفل.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 9,
+                goal: "الهدف (ب) - إنشاء لوحات المعلومات والتقارير الذكية",
+                question: "ما هو الدور الأساسي لبطاقات المؤشرات الرئيسية للأداء (KPI Cards) عند وضعها في أعلى واجهة لوحة المعلومات؟",
+                options: [{
+                    text: "أ) إعطاء نظرة خاطفة ومركزة جداً على الأرقام الحيوية الأكثر أهمية للمدير التنفيذي.",
+                    isCorrect: true
+                }, {
+                    text: "ب) زيادة مساحة التخزين المؤقت لملف الإكسل.",
+                    isCorrect: false
+                }, {
+                    text: "ج) حساب المتوسط الحسابي لجميع أوراق العمل دفعة واحدة.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 10,
+                goal: "الهدف (ب) - إنشاء لوحات المعلومات والتقارير الذكية",
+                question: "لماذا يُنصح دائماً بتجنب استخدام الخلفيات المزخرفة والألوان الصارخة والفاقعة في لوحات البيانات؟",
+                options: [{
+                    text: "أ) لأنها تزيد من سرعة معالجة الملفات ولكنها تستهلك طاقة البطارية.",
+                    isCorrect: false
+                }, {
+                    text: "ب) لأنها تشتت انتباه القارئ، تسبب إجهاداً بصرياً، وتضعف وضوح النصوص والأرقام.",
+                    isCorrect: true
+                }, {
+                    text: "ج) لأن الإكسل يمنع طباعة الملفات التي تحتوى على أكثر من لونين.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 11,
+                goal: "الهدف (ب) - إنشاء لوحات المعلومات والتقارير الذكية",
+                question: "كيف تساهم شرائح العرض التفاعلية (Slicers) في تحسين تجربة المستخدم عند التعامل مع الجداول والمخططات المحورية؟",
+                options: [{
+                    text: "أ) من خلال توفير أزرار مرئية ضخمة تتيح تصفية البيانات والمخططات بنقرة واحدة سريعة.",
+                    isCorrect: true
+                }, {
+                    text: "ب) عبر تلقائية تصحيح الأخطاء الإملائية في نصوص الخلايا.",
+                    isCorrect: false
+                }, {
+                    text: "ج) لتقليص حجم الملف المرفق عند إرساله عبر البريد الإلكتروني.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 12,
+                goal: "الهدف (ب) - إنشاء لوحات المعلومات والتقارير الذكية",
+                question: "ما هو الغرض الفني من إخفاء خطوط الشبكة (Gridlines) في ورقة العمل المخصصة لعرض اللوحة النهائية؟",
+                options: [{
+                    text: "أ) لحماية المعادلات من السرقة أو التعديل المباشر.",
+                    isCorrect: false
+                }, {
+                    text: "ب) لإعطاء اللوحة مظهراً احترافياً ونظيفاً يشبه التطبيقات والبرامج المستقلة.",
+                    isCorrect: true
+                }, {
+                    text: "ج) لتمكين دالة =XLOOKUP() من العمل بشكل أسرع.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 13,
+                goal: "الهدف (ب) - إنشاء لوحات المعلومات والتقارير الذكية",
+                question: "لماذا يُفضل استخدام المخطط المختلط (Combo Chart) في بعض لوحات المعلومات التنفيذية؟",
+                options: [{
+                    text: "أ) لدمج نوعين من المخططات (مثل الأعمدة والخطوط) لعرض بيانات مختلفة المقاييس في مكان واحد.",
+                    isCorrect: true
+                }, {
+                    text: "ب) لتقليل عدد الأعمدة المطلوبة في جداول الإدخال الخام.",
+                    isCorrect: false
+                }, {
+                    text: "ج) لأنه المخطط الوحيد الذي يدعم الألوان المتدرجة في إكسل.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 14,
+                goal: "الهدف (ب) - إنشاء لوحات المعلومات والتقارير الذكية",
+                question: "ما هو الأثر الناجم عن الاعتماد على مسارات ملفات محلية وثابتة لربط البيانات بين الأوراق؟",
+                options: [{
+                    text: "أ) تحسين سرعة الأداء المالي للملفات الكبيرة.",
+                    isCorrect: false
+                }, {
+                    text: "ب) انقطاع الاتصال وفشل تحديث البيانات عند نقل الملف إلى جهاز آخر أو مشاركته.",
+                    isCorrect: true
+                }, {
+                    text: "ج) تحديث اللوحة تلقائياً كل ثانية عبر الإنترنت.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 15,
+                goal: "الهدف (ب) - إنشاء لوحات المعلومات والتقارير الذكية",
+                question: "كيف تساعدك دالة معالجة الأخطاء المحيطة مثل =IFERROR(Formula, \"\") في بناء النماذج الاحترافية؟",
+                options: [{
+                    text: "أ) لحساب المجموع التراكمي للخلايا الملونة فقط.",
+                    isCorrect: false
+                }, {
+                    text: "ب) لإخفاء الأخطاء المؤقتة المزعجة في النماذج ريثما يتم إدخال البيانات الجديدة.",
+                    isCorrect: true
+                }, {
+                    text: "ج) لتسريع عملية الفرز الأبجدي للنصوص العربية والانجليزية.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 16,
+                goal: "الهدف (ب) - إنشاء لوحات المعلومات والتقارير الذكية",
+                question: "ما هي الفائدة من استخدام أداة التنسيق كجدول (Format as Table) في تنظيم البيانات الخام للوحة؟",
+                options: [{
+                    text: "أ) تطبيق أنماط تصميم جاهزة، وتحديث نطاق المعادلات والمخططات تلقائياً عند إضافة بيانات جديدة.",
+                    isCorrect: true
+                }, {
+                    text: "ب) إغلاق نافذة الإكسل تلقائياً عند حدوث خطأ في الحساب.",
+                    isCorrect: false
+                }, {
+                    text: "ج) دمج جميع أوراق العمل في صفحة واحدة مطبوعة.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 17,
+                goal: "الهدف (ب) - إنشاء لوحات المعلومات والتقارير الذكية",
+                question: "لماذا يُعد توثيق تاريخ آخر تحديث للبيانات أمراً حيوياً داخل واجهة لوحة المعلومات؟",
+                options: [{
+                    text: "أ) ليعرف المستخدم بوضوح ما إذا كانت الأرقام المعروضة حديثة وحية أم تعود لفترة سابقة قد تؤثر على قرارهم.",
+                    isCorrect: true
+                }, {
+                    text: "ب) لأن إدارة الجودة تفرض ذلك قانونياً على كافة ملفات الوورد والإكسل.",
+                    isCorrect: false
+                }, {
+                    text: "ج) لتمكين الأداة من حساب الفارق الزمني بالأيام تلقائياً.",
+                    isCorrect: false
+                }]
+            },
+
+            // --- ثالثاً: أسئلة الهدف (ج) - مراجعة وتقييم فعالية لوحة المعلومات (8 أسئلة) ---
+            {
+                id: 18,
+                goal: "الهدف (ج) - مراجعة وتقييم فعالية لوحة المعلومات",
+                question: "ما هو الدور الحاسم لاختبار 'حافة الحدود' (Boundary Testing) عند مراجعة صحة مدخلات النموذج؟",
+                options: [{
+                    text: "أ) التأكد من أن النموذج يتعامل بسلامة مع القيم المتطرفة (مثل أعلى وأقل قيمة مسموحة) دون انهيار.",
+                    isCorrect: true
+                }, {
+                    text: "ب) اختبار سرعة الإنترنت أثناء رفع الملف إلى السحابة.",
+                    isCorrect: false
+                }, {
+                    text: "ج) فحص مدى مطابقة الألوان للهوية البصرية للمؤسسة.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 19,
+                goal: "الهدف (ج) - مراجعة وتقييم فعالية لوحة المعلومات",
+                question: "ما هو الغرض الأساسي من إجراء 'اختبار الإجهاد' (Stress Testing) للنموذج الحسابي قبل اعتماده نهائياً؟",
+                options: [{
+                    text: "أ) قياس درجات حرارة المعالج أثناء تشغيل الملف.",
+                    isCorrect: false
+                }, {
+                    text: "ب) إدخال أرقام ضخمة واستثنائية لاختبار استقرار المعادلات وعدم ظهور أخطاء مفاجئة.",
+                    isCorrect: true
+                }, {
+                    text: "ج) التأكد من أن حجم الخطوط مريح لجميع الموظفين.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 20,
+                goal: "الهدف (ج) - مراجعة وتقييم فعالية لوحة المعلومات",
+                question: "لماذا يُعد فحص التوافقية (Compatibility Check) خطوة إلزامية عند مشاركة ملف الإكسل مع مستخدمين يستخدمون إصدارات قديمة؟",
+                options: [{
+                    text: "أ) للتأكد من عدم تعطل الدوال الحديثة (مثل =XLOOKUP()) وعدم ظهور أخطاء عند فتح الملف.",
+                    isCorrect: true
+                }, {
+                    text: "ب) لتصغير حجم الملف لكي يفتح في أقل من ثانية.",
+                    isCorrect: false
+                }, {
+                    text: "ج) لتحويل جميع النصوص العربية إلى الإنجليزية تلقائياً.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 21,
+                goal: "الهدف (ج) - مراجعة وتقييم فعالية لوحة المعلومات",
+                question: "كيف تتأكد خلال المراجعة النهائية أن استخدام التنسيقات الشرطية المتقدمة لا يؤثر سلباً على أداء الملف؟",
+                options: [{
+                    text: "أ) بزيادة عدد القواعد المطبقة على كافة خلايا الورقة بلا استثناء.",
+                    isCorrect: false
+                }, {
+                    text: "ب) بتقليل عدد القواعد المطبقة على نطاقات ضخمة وقصرها على الخلايا الجوهرية فقط لتجنب إبطاء المعالجة.",
+                    isCorrect: true
+                }, {
+                    text: "ج) بتحويل كافة التنسيقات الشرطية إلى صور ثابتة.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 22,
+                goal: "الهدف (ج) - مراجعة وتقييم فعالية لوحة المعلومات",
+                question: "ما هو الاختبار الحقيقي والموضوعي لجودة لوحة معلومات المؤسسة بعد نشرها؟",
+                options: [{
+                    text: "أ) عدد الألوان المستخدمة في المخططات البيانية.",
+                    isCorrect: false
+                }, {
+                    text: "ب) قدرتها المثبتة على تسريع وتيرة اتخاذ القرارات الإدارية وحل المشكلات التشغيلية بكفاءة.",
+                    isCorrect: true
+                }, {
+                    text: "ج) كمية المعادلات المعقدة والمتداخلة داخل خلفية الملف.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 23,
+                goal: "الهدف (ج) - مراجعة وتقييم فعالية لوحة المعلومات",
+                question: "ما هو الأثر السلبي المباشر لغياب الأدلة التوضيحية للمحاور أو الوحدات في الرسوم البيانية أثناء مراجعة اللوحة؟",
+                options: [{
+                    text: "أ) وقوع القارئ في حيرة وتقديرات خاطئة تماماً لحجم الأرقام الحقيقية.",
+                    isCorrect: true
+                }, {
+                    text: "ب) توقف الجداول المحورية عن التحديث عند تغيير الشرائح.",
+                    isCorrect: false
+                }, {
+                    text: "ج) حدوث خطأ #VALUE! في خلايا الملخصات التنفيذية.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 24,
+                goal: "الهدف (ج) - مراجعة وتقييم فعالية لوحة المعلومات",
+                question: "لماذا يُعتبر تدريب المستخدمين النهائيين على استخدام اللوحة خطوة مكملة وضرورية لنجاح عملية التصميم؟",
+                options: [{
+                    text: "أ) لأن المستخدمين هم من سيقومون بتحديث كود البرمجة (VBA) بأنفسهم لاحقاً.",
+                    isCorrect: false
+                }, {
+                    text: "ب) لضمان استغلالهم لكافة المزايا التفاعلية والتحليلية المتاحة في الأداة بأقصى طاقة ممكنة وتحقيق الهدف منها.",
+                    isCorrect: true
+                }, {
+                    text: "ج) لمنعهم من فتح الملف في أوقات خارج الدوام الرسمي.",
+                    isCorrect: false
+                }]
+            }, {
+                id: 25,
+                goal: "الهدف (ج) - مراجعة وتقييم فعالية لوحة المعلومات",
+                question: "ماذا تمثل الخطوة الأولى والمنطقية فوراً عند تلقي شكوى من متخذ القرار بشأن عدم دقة رقم معين يظهر في اللوحة؟",
+                options: [{
+                    text: "أ) حذف اللوحة بالكامل وإعادة برمجتها من الصفر.",
+                    isCorrect: false
+                }, {
+                    text: "ب) تتبع مسار الخلية المعنية ومعادلاتها ومصادر البيانات الأصلية للوقوف على سبب الخلل وتصحيحه.",
+                    isCorrect: true
+                }, {
+                    text: "ج) زيادة حجم الخط وجعل الأرقام باللون الأحمر البارز.",
+                    isCorrect: false
+                }]
+            }
+        ];
+
+        let studentFullName = "";
+        let userAnswers = {};
+        let incorrectQuestions = [];
+        let correctionAnswers = {};
+        let antiCheatTriggered = false;
+
+        // Anti-Cheat Event Listeners
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden && !antiCheatTriggered) {
+                triggerCheatModal();
+            }
+        });
+
+        window.addEventListener("blur", function() {
+            if (!antiCheatTriggered) {
+                triggerCheatModal();
+            }
+        });
+
+        function triggerCheatModal() {
+            const welcomeView = document.getElementById("welcome-view");
+            const quizView = document.getElementById("quiz-view");
+            if ((quizView && !quizView.classList.contains("hidden")) || (welcomeView && !welcomeView.classList.contains("hidden"))) {
+                antiCheatTriggered = true;
+                document.getElementById("cheat-modal").classList.remove("hidden");
+            }
+        }
+
+        function handleCheatZeroScore() {
+            document.getElementById("cheat-modal").classList.add("hidden");
+            studentFullName = document.getElementById("student-name").value.trim() || "طالبة غير مسجلة";
+
+            // Set all scores to 0
+            document.getElementById("welcome-view").classList.add("hidden");
+            document.getElementById("quiz-view").classList.add("hidden");
+            document.getElementById("first-result-view").classList.add("hidden");
+            document.getElementById("correction-view").classList.add("hidden");
+
+            const finalView = document.getElementById("final-result-view");
+            finalView.classList.remove("hidden");
+
+            document.getElementById("final-res-student-name").innerText = studentFullName;
+            document.getElementById("final-result-heading").innerText = "⚠️ تم إنهاء الاختبار بسبب الغش";
+            document.getElementById("final-result-subheading").innerText = "تم رصد مغادرة الصفحة، وبناءً عليه تم احتساب النتيجة النهائية صفر.";
+
+            document.getElementById("final-scores-grid").innerHTML = `
+                <div class="text-center py-6">
+                    <span class="text-4xl font-black text-rose-500">0 / 200</span>
+                    <span class="block text-xs text-slate-400 mt-2">النتيجة النهائية (صفر)</span>
+                </div>
+            `;
+            document.getElementById("final-res-progress-bar").style.width = "0%";
+        }
+
+        function clearInputError() {
+            const nameInput = document.getElementById("student-name");
+            nameInput.classList.remove("input-error-shake");
+        }
+
+        function startExam() {
+            const nameInput = document.getElementById("student-name");
+            studentFullName = nameInput.value.trim();
+            if (!studentFullName) {
+                nameInput.classList.add("input-error-shake");
+                nameInput.focus();
+                return;
+            }
+
+            document.getElementById("welcome-view").classList.add("hidden");
+            document.getElementById("quiz-view").classList.remove("hidden");
+            document.getElementById("header-badge").innerText = `الطالبة: ${studentFullName}`;
+
+            renderQuestions();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById("questions-form-container");
+            container.innerHTML = "";
+
+            examQuestions.forEach((q, index) => {
+                let optionsHTML = "";
+                q.options.forEach((opt, oIndex) => {
+                    optionsHTML += `
+                        <label class="block relative cursor-pointer">
+                            <input type="radio" name="question_${q.id}" value="${oIndex}" class="peer sr-only option-card-input" onchange="removeCardError(${q.id})">
+                            <div class="option-card-content p-4 rounded-2xl bg-black/40 border border-rose-500/20 transition-all flex items-center justify-between">
+                                <span class="text-xs sm:text-sm text-slate-200 font-medium">${opt.text}</span>
+                                <div class="w-5 h-5 rounded-full border-2 border-slate-600 flex items-center justify-center shrink-0 mr-3 radio-dot transition-all">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-white opacity-0 transition-opacity"></div>
+                                </div>
+                            </div>
+                        </label>
+                    `;
+                });
+
+                container.innerHTML += `
+                    <div id="card-q-${q.id}" class="bg-black/40 border border-rose-500/20 p-5 sm:p-6 rounded-3xl space-y-4 shadow-xl transition-all">
+                        <div class="flex items-center justify-between border-b border-rose-500/10 pb-3">
+                            <span class="text-[11px] font-bold text-rose-300 bg-rose-500/10 px-3 py-1 rounded-lg border border-rose-500/20">${q.goal}</span>
+                            <span class="text-xs font-black text-rose-400">السؤال ${index + 1} من 25 (8 علامات)</span>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-bold text-white leading-relaxed text-right">${q.question}</h3>
+                        <div class="space-y-2.5 pt-2">
+                            ${optionsHTML}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function removeCardError(qId) {
+            const card = document.getElementById(`card-q-${qId}`);
+            if (card) {
+                card.classList.remove("unanswered-card");
+            }
+        }
+
+        function submitExamForm() {
+            let allAnswered = true;
+            userAnswers = {};
+            incorrectQuestions = [];
+
+            examQuestions.forEach(q => {
+                const radios = document.getElementsByName(`question_${q.id}`);
+                let selectedVal = null;
+                radios.forEach((r, idx) => {
+                    if (r.checked) selectedVal = idx;
+                });
+
+                const card = document.getElementById(`card-q-${q.id}`);
+                if (selectedVal === null) {
+                    allAnswered = false;
+                    if (card) card.classList.add("unanswered-card");
+                } else {
+                    if (card) card.classList.remove("unanswered-card");
+                    userAnswers[q.id] = selectedVal;
+                    if (!q.options[selectedVal].isCorrect) {
+                        incorrectQuestions.push(q);
+                    }
+                }
+            });
+
+            const warningTag = document.getElementById("warning-missing-tag");
+            if (!allAnswered) {
+                warningTag.classList.remove("hidden");
+                window.scrollTo({
+                    top: 300,
+                    behavior: 'smooth'
+                });
+                return;
+            }
+            warningTag.classList.add("hidden");
+
+            // Calculate first score
+            let correctCount = 25 - incorrectQuestions.length;
+            let totalScore = correctCount * 8;
+            let percentage = (totalScore / 200) * 100;
+
+            document.getElementById("quiz-view").classList.add("hidden");
+            const firstResView = document.getElementById("first-result-view");
+            firstResView.classList.remove("hidden");
+
+            document.getElementById("first-res-student-name").innerText = studentFullName;
+            document.getElementById("first-res-total-score-num").innerText = totalScore;
+            document.getElementById("first-res-final-percentage").innerText = `${Math.round(percentage)}%`;
+
+            setTimeout(() => {
+                document.getElementById("first-res-progress-bar").style.width = `${percentage}%`;
+            }, 100);
+
+            const heading = document.getElementById("first-result-heading");
+            const subheading = document.getElementById("first-result-subheading");
+            const iconContainer = document.getElementById("first-result-icon-container");
+
+            if (totalScore === 200) {
+                heading.innerText = "🌟 إنجاز استثنائي وعلامة كاملة!";
+                subheading.innerText = "لقد أجبتِ على كافة الأسئلة بشكل صحيح تماماً. أنتِ مبدعة ومتألقة حقاً!";
+                iconContainer.className = "inline-block p-6 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-emerald-400 mb-1";
+            } else if (incorrectQuestions.length > 0) {
+                heading.innerText = `لديك ${incorrectQuestions.length} أسئلة بحاجة للتصحيح`;
+                subheading.innerText = "لا تقلقي! يمكنك الانتقال فوراً لجولة التصحيح ومراجعة هذه الأسئلة لرفع درجتك النهائية.";
+                iconContainer.className = "inline-block p-6 bg-rose-500/20 border border-rose-500/30 rounded-full text-rose-400 mb-1";
+            }
+        }
+
+        function proceedToCorrection() {
+            if (incorrectQuestions.length === 0) {
+                exitExamDirectly();
+                return;
+            }
+
+            document.getElementById("first-result-view").classList.add("hidden");
+            const correctionView = document.getElementById("correction-view");
+            correctionView.classList.remove("hidden");
+
+            const container = document.getElementById("correction-questions-container");
+            container.innerHTML = "";
+
+            incorrectQuestions.forEach((q, index) => {
+                let optionsHTML = "";
+                q.options.forEach((opt, oIndex) => {
+                    optionsHTML += `
+                        <label class="block relative cursor-pointer">
+                            <input type="radio" name="correction_q_${q.id}" value="${oIndex}" class="peer sr-only correction-option-card-input" onchange="removeCorrectionCardError(${q.id})">
+                            <div class="correction-option-card-content p-4 rounded-2xl bg-black/40 border border-rose-500/20 transition-all flex items-center justify-between">
+                                <span class="text-xs sm:text-sm text-slate-200 font-medium">${opt.text}</span>
+                                <div class="w-5 h-5 rounded-full border-2 border-slate-600 flex items-center justify-center shrink-0 mr-3 radio-dot transition-all">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-white opacity-0 transition-opacity"></div>
+                                </div>
+                            </div>
+                        </label>
+                    `;
+                });
+
+                container.innerHTML += `
+                    <div id="correction-card-q-${q.id}" class="bg-black/40 border border-rose-500/20 p-5 sm:p-6 rounded-3xl space-y-4 shadow-xl transition-all">
+                        <div class="flex items-center justify-between border-b border-rose-500/10 pb-3">
+                            <span class="text-[11px] font-bold text-rose-300 bg-rose-500/10 px-3 py-1 rounded-lg border border-rose-500/20">${q.goal}</span>
+                            <span class="text-xs font-black text-rose-400">سؤال تصحيح رقم ${index + 1}</span>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-bold text-white leading-relaxed text-right">${q.question}</h3>
+                        <div class="space-y-2.5 pt-2">
+                            ${optionsHTML}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function removeCorrectionCardError(qId) {
+            const card = document.getElementById(`correction-card-q-${qId}`);
+            if (card) card.classList.remove("unanswered-card");
+        }
+
+        function submitCorrectionForm() {
+            let allAnswered = true;
+            correctionAnswers = {};
+
+            incorrectQuestions.forEach(q => {
+                const radios = document.getElementsByName(`correction_q_${q.id}`);
+                let selectedVal = null;
+                radios.forEach((r, idx) => {
+                    if (r.checked) selectedVal = idx;
+                });
+
+                const card = document.getElementById(`correction-card-q-${q.id}`);
+                if (selectedVal === null) {
+                    allAnswered = false;
+                    if (card) card.classList.add("unanswered-card");
+                } else {
+                    if (card) card.classList.remove("unanswered-card");
+                    correctionAnswers[q.id] = selectedVal;
+                }
+            });
+
+            const warningTag = document.getElementById("correction-warning-tag");
+            if (!allAnswered) {
+                warningTag.classList.remove("hidden");
+                return;
+            }
+            warningTag.classList.add("hidden");
+
+            // Re-evaluate
+            let fixedCount = 0;
+            incorrectQuestions.forEach(q => {
+                let chosenOpt = correctionAnswers[q.id];
+                if (q.options[chosenOpt].isCorrect) {
+                    fixedCount++;
+                }
+            });
+
+            let initialCorrect = 25 - incorrectQuestions.length;
+            let finalCorrect = initialCorrect + fixedCount;
+            let finalScore = finalCorrect * 8;
+            let finalPercentage = (finalScore / 200) * 100;
+
+            document.getElementById("correction-view").classList.add("hidden");
+            const finalView = document.getElementById("final-result-view");
+            finalView.classList.remove("hidden");
+
+            document.getElementById("final-res-student-name").innerText = studentFullName;
+
+            const heading = document.getElementById("final-result-heading");
+            const subheading = document.getElementById("final-result-subheading");
+            const iconContainer = document.getElementById("final-result-icon-container");
+
+            if (finalScore === 200) {
+                heading.innerText = "🎉 مبروك! العلامة الكاملة بعد التصحيح";
+                subheading.innerText = "أداء رائع ومميز في تصحيح أخطائك والوصول إلى نتيجة 100%.";
+                iconContainer.className = "inline-block p-6 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-emerald-400 mb-1";
+            } else {
+                heading.innerText = "✨ انتهى الاختبار بنجاح";
+                subheading.innerText = "شكراً لمشاركتك ومراجعتك المستمرة لتحسين مستواك التقني.";
+                iconContainer.className = "inline-block p-6 bg-rose-500/20 border border-rose-500/30 rounded-full text-rose-400 mb-1";
+            }
+
+            document.getElementById("final-scores-grid").innerHTML = `
+                <div class="relative z-10 py-2 flex flex-col items-center justify-center">
+                    <div class="relative flex items-center justify-center w-36 h-36 rounded-full bg-rose-950/40 border-4 border-rose-500/30">
+                        <div class="text-center">
+                            <span class="block text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-400">${Math.round(finalPercentage)}%</span>
+                            <span class="text-[10px] text-slate-300 font-bold uppercase">النتيجة النهائية</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-center space-y-1">
+                        <div class="text-2xl sm:text-3xl font-black text-white">
+                            <span class="text-rose-400">${finalScore}</span>
+                            <span class="text-slate-500 text-lg">/</span>
+                            <span class="text-slate-400 text-lg">200</span>
+                        </div>
+                        <span class="text-xs text-slate-300 font-semibold">مجموع العلامات النهائي</span>
+                    </div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                document.getElementById("final-res-progress-bar").style.width = `${finalPercentage}%`;
+            }, 100);
+        }
+
+        function exitExamDirectly() {
+            let initialCorrect = 25 - incorrectQuestions.length;
+            let initialScore = initialCorrect * 8;
+            let initialPercentage = (initialScore / 200) * 100;
+
+            document.getElementById("first-result-view").classList.add("hidden");
+            const finalView = document.getElementById("final-result-view");
+            finalView.classList.remove("hidden");
+
+            document.getElementById("final-res-student-name").innerText = studentFullName;
+            document.getElementById("final-result-heading").innerText = "✨ تم حفظ النتيجة بنجاح";
+            document.getElementById("final-result-subheading").innerText = "شكراً لك على إتمام اختبار النمذجة الشامل.";
+            document.getElementById("final-result-icon-container").className = "inline-block p-6 bg-rose-500/20 border border-rose-500/30 rounded-full text-rose-400 mb-1";
+
+            document.getElementById("final-scores-grid").innerHTML = `
+                <div class="relative z-10 py-2 flex flex-col items-center justify-center">
+                    <div class="relative flex items-center justify-center w-36 h-36 rounded-full bg-rose-950/40 border-4 border-rose-500/30">
+                        <div class="text-center">
+                            <span class="block text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-400">${Math.round(initialPercentage)}%</span>
+                            <span class="text-[10px] text-slate-300 font-bold uppercase">النتيجة النهائية</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-center space-y-1">
+                        <div class="text-2xl sm:text-3xl font-black text-white">
+                            <span class="text-rose-400">${initialScore}</span>
+                            <span class="text-slate-500 text-lg">/</span>
+                            <span class="text-slate-400 text-lg">200</span>
+                        </div>
+                        <span class="text-xs text-slate-300 font-semibold">مجموع العلامات النهائي</span>
+                    </div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                document.getElementById("final-res-progress-bar").style.width = `${initialPercentage}%`;
+            }, 100);
+        }
+    </script>
+</body>
+
+</html>
